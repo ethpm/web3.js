@@ -50,7 +50,12 @@ Returns a Promise that will resolve to a package artifact.
 Since each package artifact may contain more than one contract, we need a way to get specific contract artifacts from each package artifact object.
 
 ```js
-// TODO - API to be determined
+// retrieve package artifact
+const MyPackage = await web3.packaging.registry('packages.ethpm.eth')
+                                      .getPackage('MyPackage')
+
+// destructure contract artifacts from package artifact
+const { SimpleToken, MathLib } = MyPackage
 ```
 
 ## 4. Using the contract artifact
