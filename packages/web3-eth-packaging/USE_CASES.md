@@ -1,6 +1,13 @@
-# Web3 API use cases
+# Use cases
 
-## Selecting a registry
+There are four main steps to using the Web3 EthPM API:
+
+1. Selecting a **registry** (and optionally setting a provider)
+2. Retrieving the **package artifact** by name (and optionally version)
+3. Extracting the **contract artifact** from the package artifact (since one package can have multiple contracts)
+4. Using the **contract artifact** with Web3.js
+
+## 1. Selecting a registry
 
 ### With implicit provider
 
@@ -18,7 +25,7 @@ web3.packaging.registry('packages.ethlibs.eth', { provider: rinkebyProvider })
 
 Returns a `Packaging` object with the registry address saved, using the provider passed in explicitly.
 
-## Retrieving package artifact
+## 2. Retrieving package artifact
 
 ### By package name alone
 
@@ -38,15 +45,23 @@ web3.packaging.registry('packages.ethpm.eth')
 
 Returns a Promise that will resolve to a package artifact.
 
-# Package artifact use cases
+## 3. Extracting contract artifact
 
-## Deploy a contract
+Since each package artifact may contain more than one contract, we need a way to get specific contract artifacts from each package artifact object.
 
-Assume that `SimpleToken` is a package artifact object.
+```js
+// TODO - API to be determined
+```
+
+## 4. Using the contract artifact
+
+### Deploying a contract
+
+Assume that `SimpleToken` is a contract artifact object.
 
 ```js
 const options = {
-  data: SimpleToken.data,     // a precompiled binary
+  data: SimpleToken.data,     // byte code of the contract
   from: "0xabC...777"         // account which funds deployment
 };
 
@@ -54,9 +69,9 @@ const instance = new web3.eth.Contract(SimpleToken.abi, options);
 await instance.deploy().send();
 ```
 
-## Interact with pre-deployed contract
+### Interact with pre-deployed contract
 
-Assume that `MathLib` is a package artifact object.
+Assume that `MathLib` is a contract artifact object.
 
 ```js
 const options = {   
