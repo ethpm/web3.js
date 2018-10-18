@@ -46,14 +46,14 @@ describe('packaging', function () {
             assert.equal(web3.eth.packaging.hello(), "Hello World");
         });
 
-        it('should be able to set registry URL with implicit provider', function () {
+        it('should set registry URL with implicit provider', function () {
             var packagingObject = web3.eth.packaging.registry("packages.ethpm.eth")
 
             assert.equal(packagingObject.registryUrl, "packages.ethpm.eth");
             assert.equal(packagingObject.provider, provider);
         });
 
-        it('should be able to set registry URL with explicit provider', function () {
+        it('should set registry URL with explicit provider', function () {
             var customProvider = new FakeHttpProvider();
             var packagingObject = web3.eth.packaging.registry("packages.ethpm.eth", {
                 provider: customProvider
@@ -61,6 +61,37 @@ describe('packaging', function () {
 
             assert.equal(packagingObject.registryUrl, "packages.ethpm.eth");
             assert.equal(packagingObject.provider, customProvider);
+        });
+
+        it('should get package artifact with implicit version number', function (done) {
+            var packagePromise = web3.eth.packaging
+                .registry("packages.ethpm.eth")
+                .package("MyPackage")
+
+
+            packagePromise
+                .then(function (packageArtifact) {
+                    assert.equal(packageArtifact, "");
+                    done();
+                })
+                .catch(function (err) {
+                    done(err || new Error("Promise was rejected"))
+                });
+        });
+
+        it('should get package artifact with explicit version number', function (done) {
+            var packagePromise = web3.eth.packaging
+                .registry("packages.ethpm.eth")
+                .package("MyPackage", { version: "^1.1.5" })
+            
+            packagePromise
+                .then(function (packageArtifact) {
+                    assert.equal(packageArtifact, "");
+                    done();
+                })
+                .catch(function (err) {
+                    done(err || new Error("Promise was rejected"))
+                });
         });
     });
 });
