@@ -29,10 +29,23 @@
  */
 function Packaging(eth) {
     this.eth = eth;
+    this.provider = null;
+    this.registryUrl = null;
 }
 
 Packaging.prototype.hello = function () {
     return "Hello World";
+}
+
+Packaging.prototype.registry = function(registry, options) {
+    this.registryUrl = registry;
+    this.provider = this.eth.currentProvider;
+
+    if (options && options.provider) {
+        this.provider = options.provider
+    }
+
+    return this;
 }
 
 module.exports = Packaging;

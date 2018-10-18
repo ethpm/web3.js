@@ -45,5 +45,22 @@ describe('packaging', function () {
         it('should have a hello world function', function () {
             assert.equal(web3.eth.packaging.hello(), "Hello World");
         });
+
+        it('should be able to set registry URL with implicit provider', function () {
+            var packagingObject = web3.eth.packaging.registry("packages.ethpm.eth")
+
+            assert.equal(packagingObject.registryUrl, "packages.ethpm.eth");
+            assert.equal(packagingObject.provider, provider);
+        });
+
+        it('should be able to set registry URL with explicit provider', function () {
+            var customProvider = new FakeHttpProvider();
+            var packagingObject = web3.eth.packaging.registry("packages.ethpm.eth", {
+                provider: customProvider
+            });
+
+            assert.equal(packagingObject.registryUrl, "packages.ethpm.eth");
+            assert.equal(packagingObject.provider, customProvider);
+        });
     });
 });
