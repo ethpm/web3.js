@@ -31,6 +31,7 @@ var utils = require('web3-utils');
 var Net = require('web3-net');
 
 var ENS = require('web3-eth-ens');
+var Packaging = require('web3-eth-packaging');
 var Personal = require('web3-eth-personal');
 var BaseContract = require('web3-eth-contract');
 var Iban = require('web3-eth-iban');
@@ -183,6 +184,9 @@ var Eth = function Eth() {
 
     // add ENS
     this.ens = new ENS(this);
+
+    // add Packaging
+    this.packaging = new Packaging(this);
 
     var methods = [
         new Method({
